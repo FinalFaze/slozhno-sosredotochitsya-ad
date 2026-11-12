@@ -10,7 +10,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  font-family: var(--font-family, monospace);
+  font-family: var(--font-family, 'IBM Plex Mono', monospace);
   font-size: 18px;
   line-height: 1.3;
 }
@@ -44,14 +44,17 @@
 
 .header {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 1fr min-content 1fr;
   align-items: center;
-  min-height: 668px;
+  width: 100%;
   height: 100vh;
+  min-height: 668px;
   padding: 10px;
 }
 
 .header__theme-menu {
+  grid-row: 1;
   justify-self: end;
   align-self: center;
 }
@@ -60,13 +63,14 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 10px;
 }
 
 .header__theme-menu-button {
   padding: 1px 13px;
   border: 1px solid transparent;
   color: var(--menu-color);
-  background: transparent;
+  background-color: transparent;
   font: inherit;
   font-size: 18px;
   line-height: 1;
@@ -94,17 +98,20 @@
 .header__rec {
   position: absolute;
   top: 10px;
-  right: 38px;
+  right: 19px;
   display: inline-flex;
   align-items: center;
   gap: 10px;
   color: var(--accent-color);
   font-size: 18px;
   line-height: 25px;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .header__rec::after {
   display: block;
+  flex-shrink: 0;
   width: 9px;
   height: 9px;
   border-radius: 50%;
@@ -114,18 +121,31 @@
 }
 
 .header__title {
+  grid-row: 2;
+  justify-self: start;
+  align-self: center;
+  width: 5ch;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
   color: var(--heading-color);
   font-size: clamp(7.25rem, 7.0115rem + 1.0178vw, 7.5rem);
   font-weight: 700;
   line-height: 0.825;
   text-shadow: 4px 4px 0 var(--accent-color);
+  white-space: normal;
 }
 
 .header__description {
-  justify-self: end;
+  grid-row: 3;
+  justify-self: stretch;
   align-self: center;
-  max-width: 355px;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
   font-weight: 700;
+  line-height: 1.3;
 }
 
 .title-decor {
@@ -142,6 +162,7 @@
 .content-section {
   display: grid;
   gap: 20px;
+  min-width: 0;
 }
 
 .content-section__title {
@@ -185,22 +206,24 @@
   overflow-wrap: break-word;
 }
 
-.content-card__text a {
+.content-card__link {
+  color: inherit;
   text-decoration: none;
   text-shadow: 2px 2px 0 var(--link-shadow-color);
   cursor: pointer;
 }
 
-.content-card__text a:hover {
+.content-card__link:hover {
   border-bottom: 1px solid currentColor;
 }
 
-.content-card__text a:focus {
+.content-card__link:focus {
   outline: none;
 }
 
-.content-card__text a:focus-visible {
+.content-card__link:focus-visible {
   outline: 1px solid currentColor;
+  outline-offset: 2px;
 }
 
 .gallery {
@@ -234,8 +257,8 @@
 .footer {
   display: grid;
   place-items: center;
-  min-height: 668px;
   height: 100vh;
+  min-height: 668px;
   padding: 10px;
 }
 
@@ -264,27 +287,27 @@
   }
 
   .header__theme-menu {
-    justify-self: center;
-    align-self: start;
-  }
-
-  .header__theme-menu-list {
-    flex-direction: row;
-    gap: 10px;
+    justify-self: end;
+    align-self: center;
   }
 
   .header__rec {
     top: 20px;
-    right: 48px;
+    right: 29px;
   }
 
   .header__title {
+    width: auto;
+    max-width: none;
     margin-left: -20px;
     font-size: clamp(7.5rem, 0.5625rem + 14.4531vw, 9.8125rem);
+    white-space: nowrap;
   }
 
   .header__description {
-    width: 364px;
+    justify-self: end;
+    width: 50%;
+    max-width: 491px;
   }
 
   .main {
@@ -298,7 +321,7 @@
   }
 
   .causes {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .causes .content-section__title {
@@ -366,24 +389,15 @@
 }
 
 @media (width >= 1024px) {
-  .header {
-    grid-template-rows: min-content 1fr 1fr;
-  }
-
   .header__theme-menu {
+    justify-self: center;
     align-self: start;
   }
 
-  .header__title {
-    align-self: center;
-  }
-
-  .header__description {
-    align-self: center;
-  }
-
-  .main {
-    gap: 80px;
+  .header__theme-menu-list {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
   }
 
   .content-section {
@@ -391,10 +405,6 @@
   }
 
   .causes {
-    grid-template-columns: 1fr;
-  }
-
-  .content-section__body_cards {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
   }
 }
